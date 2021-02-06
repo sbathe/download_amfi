@@ -1,0 +1,23 @@
+{
+    "cache_path": "/downloaddata/cache",
+    "storage_path": "/downloaddata/amfidata2",
+    "log_level": "DEBUG",
+    "mutual_funds": {
+        "source": "amfi",
+        "backend": "files"
+    },
+    "equities": { 
+        "source": "yahoo",
+        "storage": "files"
+    },
+    "sources": {
+        "amfi": {
+        }
+    },
+    "backend": {
+        "files": {
+            "storage_path": "/downloaddata/amfidata2",
+            "keep_cache": true
+        }
+    }
+}
