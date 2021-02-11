@@ -43,16 +43,15 @@ def do_amc_loop(amc_codes):
         # Parse and put the AMC files as csvs
         json_data = p.get_json_from_amc_csvs(a.name)
         writer.write_schemewise_data(json_data)
-
 delta = u.get_max_delta()
 if delta > 30:
     do_amc_loop(amc_codes)
 else:
     a = Amc(amcname='ALL',amccode='99999')
-    #d = download_data(a, delta)
-    #if d:
-    #    a.write_cache_file(d)
-    #time.sleep(5)
+    d = download_data(a, delta)
+    if d:
+        a.write_cache_file(d)
+    time.sleep(5)
 
     # Parse and put the AMC files as csvs
     json_data = p.get_json_from_amc_csvs(a.name)
