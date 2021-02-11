@@ -1,4 +1,4 @@
-from config import Config
+from config import load_config
 import datetime
 from utils import utils
 import os
@@ -16,7 +16,7 @@ class Parseamc:
         self.OPENENDED = re.compile('Open Ended Scheme')
         self.CLOSEENDED = re.compile('Close Ended Scheme')
         self.AMC = re.compile('Mutual Fund')
-        self.config = Config.load_config(self)
+        self.config = load_config()
 
     def nodata(self,raw_string):
         """ Checks if the data file has any useful info """

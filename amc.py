@@ -1,4 +1,4 @@
-from config import Config
+from config import load_config
 import datetime
 from utils import utils
 import bs4
@@ -29,7 +29,7 @@ class Amc:
             self.NAV_HISTORY_URL = self.NAV_HISTORY_URL_TEMPLATE + 'frmdt=' + self.start_date + '&todt=' + self.end_date + '&mf=' + str(amccode)
         else:
             self.NAV_HISTORY_URL = None
-        self.config = Config.load_config(self)
+        self.config = load_config(self)
 
     def __str__(self):
         return """
