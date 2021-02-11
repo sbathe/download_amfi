@@ -1,5 +1,5 @@
 import requests
-from config import Config
+from config import load_config
 import bs4
 from log import MyLog
 import sys
@@ -12,11 +12,13 @@ logger, rootlogger = MyLog.setup_logging(log)
 class utils:
     def __init__(self):
         self.CODES_URL = 'https://www.amfiindia.com/nav-history-download'
-        self.config = Config.load_config(self)
+        self.config = load_config()
 
     def get_url_data(self,url):
+        session = requests.Session()
+        session.trust_env = False
         try:
-            r = requests.get(url,timeout=(5,300))
+            r = session.get(url,timeout=(5,300))
         except requests.exceptions.RequestException as e:
             logger.error('Cannot complete request to {0}. The error was:'.format(url))
             logger.debug(e)

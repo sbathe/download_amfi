@@ -1,4 +1,4 @@
-from config import Config
+from config import load_config
 import logging
 import os
 from logging import log
@@ -6,17 +6,16 @@ from logging.handlers import RotatingFileHandler,TimedRotatingFileHandler
 
 
 class MyLog:
-    def __init__(self,log_dir='logs',loggername=None,level=logging.INFO) -> None:
+    config = load_config()
+    def __init__(self,config=config,log_dir='logs',loggername=None,level=logging.INFO) -> None:
         self.logdir = log_dir
         self.loggername = loggername
         if not os.path.isdir(self.logdir):
             os.mkdir(self.logdir)
         self.logfile = os.path.join(log_dir,loggername + '.log')
         self.rootlogfile = os.path.join(log_dir,loggername+'-root.log')
-        conf = Config()
-        self.config = conf.load_config()
-        if 'log_level' in self.config.keys():
-            if self.config['log_level'] == "DEBUG":
+        if 'log_level' in config.keys():
+            if config['log_level'] == "DEBUG":
                 self.log_level = logging.DEBUG
 
     def setup_logging(self):

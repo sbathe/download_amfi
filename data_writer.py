@@ -20,16 +20,15 @@ class Amcwriter:
                # Get Scheme meta data
                meta_file = os.path.join(out_dir,scheme + '_meta.json')
                meta_data = data[amc][scheme]['meta']
+               # Write meta data
+               u.write_json_to_file(filename=meta_file,json_data=meta_data)
                # Get scheme NAV Data
                data_file = os.path.join(out_dir,scheme + '_data.csv')
                data_data = data[amc][scheme]['data']
-               # Write meta data
-               u.write_json_to_file(filename=meta_file,json_data=meta_data)
                # Write NAV Data
-               existing_filename = scheme + '_data.csv'
-               existing_file = os.path.join(out_dir, existing_filename)
-               if os.path.isfile(existing_file):
-                   existing_data = pd.read_csv(existing_file)
-               new_csv_data = pd.DataFrame.from_dict(data_data).drop(columns='scheme_code').to_csv(index=0, index_label='date')
-               csv_data = existing_data.merge(new_csv_data,on='date',how='left')
+               if os.path.isfile(data_file):
+                   existing_data = pd.read_csv(data_file)
+               #new_csv_data = pd.DataFrame.from_dict(data_data).drop(columns='scheme_code').to_csv(index=0, index_label='date')
+               new_csv_data = pd.DataFrame.from_dict(data_data).drop(columns='scheme_code')
+               csv_data = pd.concat([existing_data, new_csv_data]).to_csv(index=0,index_label='date')
                u.write_file(filename=data_file,data=csv_data)

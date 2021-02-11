@@ -29,7 +29,7 @@ class Amc:
             self.NAV_HISTORY_URL = self.NAV_HISTORY_URL_TEMPLATE + 'frmdt=' + self.start_date + '&todt=' + self.end_date + '&mf=' + str(amccode)
         else:
             self.NAV_HISTORY_URL = None
-        self.config = load_config(self)
+        self.config = load_config()
 
     def __str__(self):
         return """

@@ -32,16 +32,28 @@ def download_data(a: Amc, delta: int) -> str:
         url = a.NAV_HISTORY_URL
     return a.get_amc_nav_data(start_date=start_date, end_date=end_date, url=url)
 
+def do_amc_loop(amc_codes):
+    for name, code in amc_codes.items():
+        a = Amc(name, code)
+        d = download_data(a, delta)
+        if d:
+            a.write_cache_file(d)
+        #time.sleep(5)
 
-for name, code in amc_codes.items():
-    a = Amc(name, code)
-    delta = u.get_max_delta()
-    d = download_data(a, delta)
-    if d:
-        a.write_cache_file(d)
+        # Parse and put the AMC files as csvs
+        json_data = p.get_json_from_amc_csvs(a.name)
+        writer.write_schemewise_data(json_data)
+
+delta = u.get_max_delta()
+if delta > 30:
+    do_amc_loop(amc_codes)
+else:
+    a = Amc(amcname='ALL',amccode='99999')
+    #d = download_data(a, delta)
+    #if d:
+    #    a.write_cache_file(d)
     #time.sleep(5)
 
     # Parse and put the AMC files as csvs
     json_data = p.get_json_from_amc_csvs(a.name)
     writer.write_schemewise_data(json_data)
-

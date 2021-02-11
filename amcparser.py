@@ -72,8 +72,8 @@ class Parseamc:
        return data
 
     def get_json_from_amc_csvs(self,amcname=None,in_dir=None):
-       if not in_dir: 
-           in_dir = self.config['cache_path'] 
+       if not in_dir:
+           in_dir = self.config['cache_path']
        filematch = '_'.join(amcname.split())
        amc_data = {}
        for _root, _dirs, files in os.walk(in_dir):
