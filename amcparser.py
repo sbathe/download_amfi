@@ -57,7 +57,10 @@ class Parseamc:
               if not amc in data.keys():
                 data[amc] = {}
            elif len(line.split(';')) > 1:
-               code,name,_ign1,_ign2,nav,_rp,_sp,date = line.split(';')
+               try:
+                  code,name,_ign1,_ign2,nav,_rp,_sp,date = line.split(';')
+               except ValueError:
+                  logger.warn("Cannot parse line: {}".format(line))
                if code not in data[amc].keys():
                  data[amc][code] = {}
                  data[amc][code]["data"] = []
