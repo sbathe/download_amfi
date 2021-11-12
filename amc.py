@@ -74,6 +74,7 @@ class Amc:
 
     def get_amc_nav_data(self,url,start_date=None,end_date=None):
         start_date, end_date = self.validate_date(start_date,end_date)
+        logger.info("Downloading data for {}".format(self.name))
         logger.debug("calling URL: {0}".format(url))
         data = utils.get_url_data(self, url)
         return data
