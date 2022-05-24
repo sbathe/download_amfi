@@ -12,7 +12,7 @@ logger, rootlogger = MyLog.setup_logging(log)
 class Amc:
     def __init__(self, amcname=None, amccode=None, start_date=None,end_date=None):
         self.CODES_URL = 'https://www.amfiindia.com/nav-history-download'
-        self.NAV_HISTORY_URL_TEMPLATE = 'http://portal.amfiindia.com/DownloadNAVHistoryReport_Po.aspx?tp=1&'
+        self.NAV_HISTORY_URL_TEMPLATE = 'https://portal.amfiindia.com/DownloadNAVHistoryReport_Po.aspx?tp=1&'
         self.START_DATE = '01-Apr-1990'
         self.END_DATE = datetime.datetime.strftime(datetime.datetime.today(),'%d-%b-%Y')
         if start_date == None:

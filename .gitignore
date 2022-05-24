@@ -1,4 +1,7 @@
 .ropeproject/
+cache/
+amfidata2/
+logs/
 __pycache__/
 downloaddata/
 logs/

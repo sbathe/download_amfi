@@ -1,6 +1,6 @@
 {
-    "cache_path": "/downloaddata/cache",
-    "storage_path": "/downloaddata/amfidata2",
+    "cache_path": "cache",
+    "storage_path": "amfidata2",
     "log_level": "DEBUG",
     "mutual_funds": {
         "source": "amfi",
@@ -16,7 +16,7 @@
     },
     "backend": {
         "files": {
-            "storage_path": "/downloaddata/amfidata2",
+            "storage_path": "amfidata2",
             "keep_cache": true
         }
     }

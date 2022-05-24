@@ -44,6 +44,9 @@ def do_amc_loop(amc_codes, delta):
 
         # Parse and put the AMC files as csvs
         json_data = p.get_json_from_amc_csvs(a.name)
+        amc_name = '_'.join(a.name.split()) + '.json'
+        #with open(amc_name, 'w') as bigjson:
+        #    json.dump(json_data, bigjson)
         writer.write_schemewise_data(json_data)
 
 delta = u.get_max_delta()
