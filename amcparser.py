@@ -5,6 +5,7 @@ import os
 import json
 import sys
 import re
+from collections import defaultdict
 from log import MyLog
 log = MyLog(loggername='get-data')
 logger, rootlogger = MyLog.setup_logging(log)
@@ -43,6 +44,8 @@ class Parseamc:
            - meta: a dictionary that has scheme name, fund AMC, category etc
            - data: list of (date, NAV) tuples
        """
+       data['category_dict'] = defaultdict(list)
+
        for line in processed_data:
            if re.search(self.HEADING,line):
                _headings = line.split(';')
@@ -65,6 +68,9 @@ class Parseamc:
                  data[amc][code] = {}
                  data[amc][code]["data"] = []
                  data[amc][code]["meta"] = { "name": name, "amc": amc, "type": "open ended", "scheme_code": code, "categories": categories }
+                 for c in categories:
+                     data['category_dict'][c].append(code)
+
                #year = datetime.datetime.strptime(date,'%d-%b-%Y').year
                #if year in data[amc][code]["data"].keys():
                    #data[amc][code]["data"][year].append({"date": date,"nav": nav})

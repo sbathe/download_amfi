@@ -16,10 +16,16 @@ class Amcwriter:
     config = load_config()
 
     def write_schemewise_data(self,
-                              data: json = None,
+                              data: dict = {},
                               out_dir=config["storage_path"]):
         u = utils()
+        # write out categories
+        category_file = os.path.join(out_dir, 'categories.json')
+        json.dump(data['category_dict'], open(category_file,'w'))
+
         for amc in data.keys():
+            if amc == 'category_dict':
+                continue
             for scheme in data[amc].keys():
                 # Get Scheme meta data
                 meta_file = os.path.join(out_dir, scheme + "_meta.json")
@@ -40,7 +46,10 @@ class Amcwriter:
                 new_csv_data = pd.DataFrame.from_dict(data_data).drop(
                     columns="scheme_code"
                 )
-                csv_data = pd.concat([existing_data, new_csv_data]).to_csv(
-                    index=0, index_label="date"
-                )
+                #csv_data = pd.concat([existing_data, new_csv_data]).to_csv(
+                #    index=0, index_label="date"
+                #)
+                csv_data = existing_data.merge(new_csv_data, on="date", how="outer")
+                csv_data.drop_duplicates(keep='last')
                 u.write_file(filename=data_file, data=csv_data)
+
