@@ -22,14 +22,12 @@ def download_data(a: Amc, delta: int) -> str:
     a.end_date = end_date
     print(f"Start and end date: {start_date} {end_date}")
     today = datetime.datetime.today()
-    if datetime.datetime.strptime(start_date, '%d-%b-%Y').weekday() >= 5:
-        if (today - datetime.datetime.strptime(start_date,
-                                               '%d-%b-%Y')).days <= 1:
-            print('No need to get data, already updated locally')
+    if datetime.datetime.strptime(start_date, "%d-%b-%Y").weekday() >= 5:
+        if (today - datetime.datetime.strptime(start_date, "%d-%b-%Y")).days <= 1:
+            print("No need to get data, already updated locally")
             return None
-    elif (today - datetime.datetime.strptime(start_date,
-                                             '%d-%b-%Y')).days == 0:
-        print('No need to get data, already updated locally')
+    elif (today - datetime.datetime.strptime(start_date, "%d-%b-%Y")).days == 0:
+        print("No need to get data, already updated locally")
         return None
     else:
         return a.get_amc_nav_data(start_date=start_date, enddate=end_date)
@@ -39,8 +37,9 @@ def get_all_data(amc_codes=amc_codes, start_date=None, end_date=None):
     # We have a delta less than a month. We can download
     # just one file with all NAV updates
     start_date, end_date = u.validate_date()
-    url = NAVALL_URL_TEMPLATE.replace('START_DATE',
-                                      start_date).replace('END_DATE', end_date)
+    url = NAVALL_URL_TEMPLATE.replace("START_DATE", start_date).replace(
+        "END_DATE", end_date
+    )
     data = utils.get_url_data(url)
     # Parse and put the AMC files as csvs
     for name, code in amc_codes.items():
@@ -51,7 +50,7 @@ def get_all_data(amc_codes=amc_codes, start_date=None, end_date=None):
 
 def do_amc_loop(amc_codes, delta):
     for name, code in amc_codes.items():
-        print('Downloading data for {}'.format(name))
+        print("Downloading data for {}".format(name))
         a = Amc(name, code)
         d = download_data(a, delta)
         if d:
