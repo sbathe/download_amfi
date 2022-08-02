@@ -25,10 +25,6 @@ class Amc:
             self.end_date = end_date
         self.name = amcname
         self.code = amccode
-        if isinstance(amccode, str) or isinstance(amccode, int):
-            self.NAV_HISTORY_URL = self.NAV_HISTORY_URL_TEMPLATE + 'frmdt=' + self.start_date + '&todt=' + self.end_date + '&mf=' + str(amccode)
-        else:
-            self.NAV_HISTORY_URL = None
         self.config = load_config()
 
     def __str__(self):
@@ -72,8 +68,16 @@ class Amc:
             end_date = self.END_DATE
         return (start_date,end_date)
 
-    def get_amc_nav_data(self,url,start_date=None,end_date=None):
+    def get_amc_nav_data(self, start_date=None, end_date=None):
+        logger.debug(f"Before validate call: Start and end date: {start_date} {end_date}")
         start_date, end_date = self.validate_date(start_date,end_date)
+        logger.debug(f"Start and end date: {start_date} {end_date}")
+        if isinstance(self.code, str) or isinstance(self.code, int):
+            url = self.NAV_HISTORY_URL_TEMPLATE + \
+                'frmdt=' + start_date + '&todt=' + end_date + \
+                '&mf=' + str(self.code)
+        else:
+            url = None
         logger.info("Downloading data for {}".format(self.name))
         logger.debug("calling URL: {0}".format(url))
         data = utils.get_url_data(self, url)

@@ -1,6 +1,19 @@
 import pandas as pd
+import json
 import os
-datafiles = [file for file in os.listdir("amfidata2") if file.endswith(".csv")]
+# list categories we are interested in
+categories = [ 'Multi Cap Fund', 'Focused Fund', 'Multi Asset Allocation',
+              'Value Fund', 'Flexi Cap Fund', 'Dividend Yield Fund',
+              'Large & Mid Cap Fund', 'Large Cap Fund', 'Contra Fund']
+
+category_data = json.load(open('amfidata2/categories.json'))
+funds_list = []
+for k in categories:
+    funds_list.extend(category_data[k])
+
+funds_list = list(dict.fromkeys(funds_list))
+datafiles = [ f + '_data.csv' for f in funds_list ]
+
 
 def merge_csvs(datafiles):
     end_df = pd.DataFrame()
@@ -17,4 +30,4 @@ def merge_csvs(datafiles):
              end_df = new_df.copy()
     return end_df
 all_csv = merge_csvs(datafiles)
-all_csv.to_csv('all.csv')
+all_csv.to_csv('targeted_equity.csv')

@@ -21,7 +21,10 @@ class Amcwriter:
         u = utils()
         # write out categories
         category_file = os.path.join(out_dir, 'categories.json')
-        json.dump(data['category_dict'], open(category_file,'w'))
+        data = json.load(open(category_file))
+        data.pop('Open Ended Schemes')
+        if 'category_dict' in data.keys():
+            json.dump(data['category_dict'], open(category_file,'w'))
 
         for amc in data.keys():
             if amc == 'category_dict':

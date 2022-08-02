@@ -16,6 +16,14 @@ class utils:
         self.CODES_URL = 'https://www.amfiindia.com/nav-history-download'
         self.config = load_config()
 
+
+    def validate_date(self,start_date=None,end_date=None):
+        if start_date is None:
+            start_date = self.get_start_date()
+        if end_date is None:
+            end_date = self.END_DATE
+        return (start_date,end_date)
+
     def get_url_data(self, url):
         session = requests.Session()
         session.trust_env = False
